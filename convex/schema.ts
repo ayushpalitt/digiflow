@@ -10,6 +10,9 @@ export default defineSchema({
         y: v.number(),
         rotation: v.number(),
         scale: v.number(),
+        flipped: v.optional(v.boolean()),
+        isManual: v.optional(v.boolean()),
+        uid: v.optional(v.string()),
       })
     ),
     letterStyle: v.string(),
@@ -25,6 +28,7 @@ export default defineSchema({
         endTime: v.number(),
       })
     ),
+    fontStyle: v.optional(v.string()),
     editToken: v.string(),
   }),
 });

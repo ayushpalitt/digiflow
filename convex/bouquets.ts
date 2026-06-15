@@ -40,6 +40,9 @@ export const createBouquet = mutation({
         y: v.number(),
         rotation: v.number(),
         scale: v.number(),
+        flipped: v.optional(v.boolean()),
+        isManual: v.optional(v.boolean()),
+        uid: v.optional(v.string()),
       })
     ),
     letterStyle: v.string(),
@@ -55,6 +58,7 @@ export const createBouquet = mutation({
         endTime: v.number(),
       })
     ),
+    fontStyle: v.optional(v.string()),
   },
   handler: async (ctx: any, args: any) => {
     // Generate a random token for editing
@@ -80,6 +84,9 @@ export const updateBouquet = mutation({
         y: v.number(),
         rotation: v.number(),
         scale: v.number(),
+        flipped: v.optional(v.boolean()),
+        isManual: v.optional(v.boolean()),
+        uid: v.optional(v.string()),
       })
     ),
     letterStyle: v.string(),
@@ -95,6 +102,7 @@ export const updateBouquet = mutation({
         endTime: v.number(),
       })
     ),
+    fontStyle: v.optional(v.string()),
   },
   handler: async (ctx: any, args: any) => {
     const bouquet = await ctx.db.get(args.id);

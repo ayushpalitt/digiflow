@@ -8,22 +8,22 @@ export default function Home() {
       {/* Background Image */}
       <div className="fixed inset-0 z-[-1]">
         <Image
-          src="/images/ghibli_meadow_bg.png"
+          src="/images/landing_bg.png"
           alt="Peaceful meadow"
           fill
-          className="object-cover opacity-80 mix-blend-multiply"
+          className="object-cover"
           priority
         />
-        {/* Soft overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-df-cream/40 backdrop-blur-[2px]"></div>
+        {/* Soft overlay to ensure text readability while letting the image shine */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-df-cream/80"></div>
       </div>
 
       {/* Hero Section */}
       <section className="w-full max-w-4xl px-6 pt-32 pb-20 text-center flex flex-col items-center min-h-[70vh] justify-center animate-float">
-        <h1 className="font-heading text-6xl md:text-8xl text-df-navy tracking-wider mb-6">
+        <h1 className="font-heading text-6xl md:text-8xl text-df-navy tracking-wider mb-6 drop-shadow-md">
           DIGIFLOW
         </h1>
-        <p className="font-body text-xl md:text-2xl text-df-brown mb-12 italic">
+        <p className="font-body text-xl md:text-2xl text-df-navy mb-12 italic drop-shadow font-medium">
           &quot;Send flowers, words, and memories.&quot;
         </p>
         <Link
@@ -37,27 +37,7 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* How it Works Section */}
-      <section className="w-full max-w-5xl px-6 py-24 bg-df-cream/80 backdrop-blur-md rounded-t-[3rem] border-t border-df-beige mt-auto">
-        <h2 className="font-heading text-4xl text-center text-df-navy mb-16">How it Works</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {[
-            { icon: Sparkles, title: "Build Your Bouquet", desc: "Select 5-10 hand-painted flowers." },
-            { icon: PenTool, title: "Write Your Letter", desc: "Choose a style and pour your heart out." },
-            { icon: Globe2, title: "Choose Your World", desc: "Set the scene for your recipient." },
-            { icon: Send, title: "Share the Moment", desc: "Send a unique link to someone special." }
-          ].map((step, idx) => (
-            <div key={idx} className="flex flex-col items-center text-center group">
-              <div className="w-16 h-16 bg-df-beige rounded-2xl flex items-center justify-center mb-6 text-df-brown group-hover:scale-110 group-hover:bg-df-dustypink group-hover:text-white transition-all duration-300 rotate-3 group-hover:rotate-6">
-                <step.icon strokeWidth={1.5} size={32} />
-              </div>
-              <h3 className="font-heading text-2xl text-df-navy mb-2">{step.title}</h3>
-              <p className="font-body text-df-brown text-sm leading-relaxed">{step.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+
     </main>
   );
 }

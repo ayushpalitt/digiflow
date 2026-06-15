@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond, Homemade_Apple, Caveat } from "next/font/google";
+import { Inter, Cormorant_Garamond, Homemade_Apple, Caveat, Dancing_Script, Special_Elite, Pacifico } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,6 +24,23 @@ const caveat = Caveat({
   subsets: ["latin"],
 });
 
+const dancingScript = Dancing_Script({
+  variable: "--font-dancing-script",
+  subsets: ["latin"],
+});
+
+const specialElite = Special_Elite({
+  weight: "400",
+  variable: "--font-special-elite",
+  subsets: ["latin"],
+});
+
+const pacifico = Pacifico({
+  weight: "400",
+  variable: "--font-pacifico",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "DIGIFLOW | A Digital Bouquet",
   description: "Send flowers, words, and memories.",
@@ -39,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${cormorant.variable} ${homemadeApple.variable} ${caveat.variable} h-full antialiased`}
+      className={`${inter.variable} ${cormorant.variable} ${homemadeApple.variable} ${caveat.variable} ${dancingScript.variable} ${specialElite.variable} ${pacifico.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ConvexClientProvider>{children}</ConvexClientProvider>

@@ -5,11 +5,21 @@ import { AnimatePresence, motion } from "framer-motion";
 interface MessageEditorProps {
   message: string;
   setMessage: (msg: string) => void;
+  fontStyle: string;
+  setFontStyle: (font: string) => void;
   onNext: () => void;
   onBack: () => void;
 }
 
-export default function MessageEditor({ message, setMessage, onNext, onBack }: MessageEditorProps) {
+const FONT_OPTIONS = [
+  { id: "font-handwriting-alt", name: "Neat" },
+  { id: "font-handwriting", name: "Scribble" },
+  { id: "font-dancing", name: "Cursive" },
+  { id: "font-typewriter", name: "Typewriter" },
+  { id: "font-pacifico", name: "Bubbly" },
+];
+
+export default function MessageEditor({ message, setMessage, fontStyle, setFontStyle, onNext, onBack }: MessageEditorProps) {
   const [error, setError] = useState("");
 
   const words = message.trim().split(/\s+/).filter((w) => w.length > 0);
@@ -36,6 +46,23 @@ export default function MessageEditor({ message, setMessage, onNext, onBack }: M
       </div>
 
       <div className="flex-1 flex flex-col items-center max-w-2xl mx-auto w-full">
+        {/* Font Selector */}
+        <div className="flex flex-wrap justify-center gap-3 mb-6">
+          {FONT_OPTIONS.map((font) => (
+            <button
+              key={font.id}
+              onClick={() => setFontStyle(font.id)}
+              className={`px-4 py-2 rounded-full text-sm transition-all duration-300 ${
+                fontStyle === font.id 
+                  ? "bg-df-navy text-white shadow-md" 
+                  : "bg-white text-df-brown hover:bg-df-beige border border-df-beige"
+              } ${font.id} text-lg`}
+            >
+              {font.name}
+            </button>
+          ))}
+        </div>
+
         <div className="w-full relative flex-1 bg-df-cream/80 border border-df-beige rounded-2xl p-6 shadow-inner focus-within:border-df-dustypink transition-colors">
           <textarea
             value={message}
@@ -44,7 +71,7 @@ export default function MessageEditor({ message, setMessage, onNext, onBack }: M
               setError("");
             }}
             placeholder="Dear friend..."
-            className="w-full h-full bg-transparent resize-none outline-none font-handwriting-alt text-2xl text-df-navy leading-loose custom-scrollbar"
+            className={`w-full h-full bg-transparent resize-none outline-none ${fontStyle} text-2xl text-df-navy leading-loose custom-scrollbar`}
           />
           
           <div className="absolute bottom-4 right-6 text-sm font-body text-df-brown flex items-center gap-4">

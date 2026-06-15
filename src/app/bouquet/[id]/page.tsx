@@ -12,6 +12,11 @@ import { Id } from "../../../../convex/_generated/dataModel";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Pause, Play, Sparkles } from "lucide-react";
+import { getFlowerZIndex } from "@/components/create/BouquetBuilder";
+
+import { useMemo } from "react";
+
+import { WorldAtmosphere } from "@/components/WorldAtmosphere";
 
 const ALL_TYPES = [
   { id: "rose", name: "Rose", image: "/images/ghibli_rose.png" },
@@ -81,22 +86,28 @@ export default function BouquetRecipientView() {
   }
 
   // Determine World Background
-  const worldBackgrounds: Record<string, string> = {
-    forest: "bg-[#1B2A22]",
-    beach: "bg-[#E68A6A]",
-    aurora: "bg-[#1E3B4D]",
-    starry: "bg-[#0F172A]",
-    mountain: "bg-[#D9A05B]",
-    rain: "bg-[#3A4556]",
+  const worldImages: Record<string, string> = {
+    forest: "/images/world_forest.png",
+    beach: "/images/world_beach.png",
+    aurora: "/images/world_aurora.png",
+    starry: "/images/world_starry.png",
+    mountain: "/images/world_mountain.png",
+    rain: "/images/world_rain.png",
   };
 
   return (
-    <div className={`min-h-screen relative overflow-hidden transition-colors duration-[3000ms] ${worldBackgrounds[bouquet.world] || "bg-df-cream"}`}>
+    <div 
+      className={`min-h-screen relative overflow-hidden transition-colors duration-[3000ms] ${!worldImages[bouquet.world] ? "bg-df-cream" : ""}`}
+      style={worldImages[bouquet.world] ? {
+        backgroundImage: `url(${worldImages[bouquet.world]})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      } : {}}
+    >
       
-      {/* World Atmosphere (CSS only for now) */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-black/20 mix-blend-overlay"></div>
-        {/* We would render actual framer-motion fireflies/stars here based on bouquet.world */}
+      {/* World Atmosphere */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <WorldAtmosphere world={bouquet.world} />
       </div>
 
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-6 md:p-12">
@@ -109,7 +120,7 @@ export default function BouquetRecipientView() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
-            className="relative w-80 h-80 sm:w-96 sm:h-96 flex items-center justify-center z-10"
+            className="relative w-80 h-80 sm:w-96 sm:h-96 flex items-center justify-center z-30 pointer-events-none"
           >
             {/* Flowers */}
             {bouquet.flowers.map((f: any, i: number) => {
@@ -118,40 +129,50 @@ export default function BouquetRecipientView() {
               return (
                 <motion.div
                   key={i}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: f.scale, opacity: 1 }}
+                  initial={{ 
+                    scale: 0, 
+                    opacity: 0,
+                    x: f.x * 1.333,
+                    y: f.y * 1.333,
+                    rotate: f.rotation
+                  }}
+                  animate={{ 
+                    scale: f.scale, 
+                    opacity: 1,
+                    x: f.x * 1.333,
+                    y: f.y * 1.333,
+                    rotate: f.rotation
+                  }}
                   transition={{ duration: 1.5, delay: 1 + i * 0.15 }}
-                  className="absolute animate-sway origin-center"
+                  className="absolute origin-bottom"
                   style={{
-                    x: f.x,
-                    y: f.y,
-                    rotate: f.rotation,
-                    zIndex: bouquet.flowers.length - i
+                    zIndex: getFlowerZIndex(f.type, i)
                   }}
                 >
                   <img 
-                    src={flowerData.image} 
+                    src={`${flowerData.image}?v=2`} 
                     alt={flowerData.name} 
-                    className="w-32 h-32 object-contain opacity-95 pointer-events-none drop-shadow-md"
+                    className="w-32 h-32 object-contain opacity-95 drop-shadow-md transition-transform animate-sway"
+                    style={{ transform: f.flipped ? 'scaleX(-1)' : 'scaleX(1)' }}
                   />
                 </motion.div>
               );
             })}
           </motion.div>
 
-          {/* Letter Area (Overlapping the bottom of the circle) */}
+          {/* Letter Area (Overlapping under the bouquet) */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 2, delay: 2.5, ease: "easeOut" }}
-            className="w-full bg-[#FCFAFA] p-8 md:p-12 rounded-sm shadow-xl relative -mt-24 sm:-mt-32 z-20 border border-df-beige/40"
+            className="w-full bg-[#FCFAFA] p-8 md:p-12 pt-24 rounded-sm shadow-xl relative -mt-40 sm:-mt-48 z-20 border border-df-beige/40"
           >
             {/* Letter texture */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply" 
                  style={{ backgroundImage: 'url("data:image/svg+xml;utf8,<svg viewBox=\\"0 0 200 200\\" xmlns=\\"http://www.w3.org/2000/svg\\"><filter id=\\"noiseFilter\\"><feTurbulence type=\\"fractalNoise\\" baseFrequency=\\"0.85\\" numOctaves=\\"3\\" stitchTiles=\\"stitch\\"/></filter><rect width=\\"100%\\" height=\\"100%\\" filter=\\"url(%23noiseFilter)\\"/></svg>")' }}>
             </div>
             
-            <p className="font-handwriting text-2xl md:text-3xl text-df-navy leading-loose relative z-10 whitespace-pre-wrap">
+            <p className={`${bouquet.fontStyle || 'font-handwriting-alt'} text-2xl md:text-3xl text-df-navy leading-loose relative z-10 whitespace-pre-wrap mt-8`}>
               {bouquet.message}
             </p>
           </motion.div>

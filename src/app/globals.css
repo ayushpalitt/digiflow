@@ -14,6 +14,9 @@
   --font-body: var(--font-inter);
   --font-handwriting: var(--font-homemade-apple);
   --font-handwriting-alt: var(--font-caveat);
+  --font-dancing: var(--font-dancing-script);
+  --font-typewriter: var(--font-special-elite);
+  --font-pacifico: var(--font-pacifico);
 }
 
 :root {
