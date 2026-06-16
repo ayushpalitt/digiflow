@@ -165,7 +165,7 @@ export default function BouquetRecipientView() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 2, delay: 2.5, ease: "easeOut" }}
-            className="w-full bg-[#FCFAFA] p-8 md:p-12 pt-24 rounded-sm shadow-xl relative -mt-40 sm:-mt-48 z-20 border border-df-beige/40"
+            className="w-full bg-[#FCFAFA] p-8 md:p-12 pt-28 md:pt-36 rounded-sm shadow-xl relative -mt-40 sm:-mt-48 z-20 border border-df-beige/40"
           >
             {/* Letter texture */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply" 
