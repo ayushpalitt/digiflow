@@ -165,14 +165,14 @@ export default function BouquetRecipientView() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 2, delay: 2.5, ease: "easeOut" }}
-            className="w-full bg-[#FCFAFA] p-8 md:p-12 pt-28 md:pt-36 rounded-sm shadow-xl relative -mt-40 sm:-mt-48 z-20 border border-df-beige/40"
+            className="w-full bg-[#FCFAFA] p-8 md:p-12 pt-16 md:pt-20 rounded-sm shadow-xl relative -mt-40 sm:-mt-48 z-20 border border-df-beige/40"
           >
             {/* Letter texture */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply" 
                  style={{ backgroundImage: 'url("data:image/svg+xml;utf8,<svg viewBox=\\"0 0 200 200\\" xmlns=\\"http://www.w3.org/2000/svg\\"><filter id=\\"noiseFilter\\"><feTurbulence type=\\"fractalNoise\\" baseFrequency=\\"0.85\\" numOctaves=\\"3\\" stitchTiles=\\"stitch\\"/></filter><rect width=\\"100%\\" height=\\"100%\\" filter=\\"url(%23noiseFilter)\\"/></svg>")' }}>
             </div>
             
-            <div className={`${bouquet.fontStyle || 'font-handwriting-alt'} text-2xl md:text-3xl text-df-navy leading-loose relative z-10 whitespace-pre-wrap mt-8 flex flex-col gap-6`}>
+            <div className={`${bouquet.fontStyle || 'font-handwriting-alt'} text-2xl md:text-3xl text-df-navy leading-loose relative z-10 whitespace-pre-wrap mt-4 flex flex-col gap-6`}>
               {bouquet.recipientName && (
                 <p>Dear {bouquet.recipientName},</p>
               )}
