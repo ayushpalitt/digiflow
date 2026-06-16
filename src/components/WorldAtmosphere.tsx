@@ -45,13 +45,30 @@ export const WorldAtmosphere = ({ world }: { world: string }) => {
     opacity: Math.random() * 0.4 + 0.4 // 0.4 to 0.8 opacity
   })), []);
 
-  const rainDrops = useMemo(() => Array.from({ length: 100 }).map(() => ({
-    height: `${Math.random() * 40 + 20}px`,
+  const rainDrops = useMemo(() => Array.from({ length: 60 }).map(() => ({
+    height: `${Math.random() * 30 + 15}px`,
     left: `${Math.random() * 120 - 10}%`,
-    targetLeft: `-${Math.random() * 5 + 2}%`, // Rain falls diagonally
-    duration: Math.random() * 0.3 + 0.3,
+    targetLeft: `-${Math.random() * 5 + 2}%`,
+    duration: Math.random() * 0.2 + 0.3,
     delay: Math.random() * 2,
-    opacity: Math.random() * 0.5 + 0.2
+    opacity: Math.random() * 0.4 + 0.1
+  })), []);
+
+  const windowDropsStatic = useMemo(() => Array.from({ length: 40 }).map(() => ({
+    x: `${Math.random() * 100}%`,
+    y: `${Math.random() * 100}%`,
+    size: Math.random() * 4 + 2,
+    duration: Math.random() * 5 + 5,
+    delay: Math.random() * 5,
+    opacity: Math.random() * 0.6 + 0.2
+  })), []);
+
+  const windowDropsSliding = useMemo(() => Array.from({ length: 15 }).map(() => ({
+    x: `${Math.random() * 100}%`,
+    startY: `${Math.random() * -20}%`,
+    duration: Math.random() * 3 + 2, // 2 to 5 seconds
+    delay: Math.random() * 10,
+    size: Math.random() * 5 + 4
   })), []);
 
   if (world === "forest") {
@@ -132,9 +149,12 @@ export const WorldAtmosphere = ({ world }: { world: string }) => {
           <motion.div
             key={`aurora-star-${i}`}
             className="absolute bg-white rounded-full pointer-events-none"
-            style={{ width: s.size, height: s.size, left: s.x, top: s.y, boxShadow: `0 0 ${s.size * 2}px rgba(255,255,255,0.8)` }}
-            initial={{ opacity: s.baseOpacity }}
-            animate={{ opacity: [0.2, 1, 0.2], scale: [1, 1.5, 1] }}
+            style={{ width: s.size, height: s.size, left: s.x, top: s.y, boxShadow: s.size > 2 ? `0 0 4px rgba(255,255,255,0.8)` : 'none' }}
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: s.isBlinking ? [0, 1, 0] : [0.3, 0.7, 0.3], 
+              scale: s.isBlinking ? [0.8, 1.2, 0.8] : 1 
+            }}
             transition={{ duration: s.duration, repeat: Infinity, ease: "easeInOut", delay: s.delay }}
           />
         ))}
@@ -270,15 +290,52 @@ export const WorldAtmosphere = ({ world }: { world: string }) => {
   if (world === "rain") {
     return (
       <>
-        <div className="absolute inset-0 bg-[#1e3a8a]/30 mix-blend-overlay pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[#0f172a]/40 mix-blend-overlay pointer-events-none"></div>
+        
+        {/* Distant falling rain */}
         {rainDrops.map((r, i) => (
           <motion.div
             key={`rain-${i}`}
-            className="absolute w-[2px] rounded-full bg-gradient-to-b from-transparent via-white/40 to-white/70 pointer-events-none rotate-[15deg]"
+            className="absolute w-[1px] md:w-[2px] rounded-full bg-gradient-to-b from-transparent via-white/30 to-white/60 pointer-events-none rotate-[10deg]"
             style={{ height: r.height, left: r.left }}
             initial={{ top: "-10%", opacity: r.opacity }}
             animate={{ left: `calc(${r.left} + ${r.targetLeft})`, top: "110%" }}
             transition={{ duration: r.duration, repeat: Infinity, ease: "linear", delay: r.delay }}
+          />
+        ))}
+
+        {/* Window glass effect overlay (subtle) */}
+        <div className="absolute inset-0 bg-white/5 mix-blend-overlay pointer-events-none backdrop-blur-[1px]"></div>
+
+        {/* Static Window Drops */}
+        {windowDropsStatic.map((d, i) => (
+          <motion.div
+            key={`drop-static-${i}`}
+            className="absolute rounded-full bg-white/10 shadow-[inset_0_-1px_3px_rgba(255,255,255,0.5),0_1px_2px_rgba(0,0,0,0.2)] backdrop-blur-[2px] pointer-events-none"
+            style={{ width: d.size, height: d.size, left: d.x, top: d.y }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: [0, d.opacity, 0], scale: [0.8, 1, 0.8] }}
+            transition={{ duration: d.duration, repeat: Infinity, ease: "easeInOut", delay: d.delay }}
+          />
+        ))}
+
+        {/* Sliding Window Drops */}
+        {windowDropsSliding.map((d, i) => (
+          <motion.div
+            key={`drop-slide-${i}`}
+            className="absolute bg-white/20 shadow-[inset_0_-2px_4px_rgba(255,255,255,0.6),0_2px_3px_rgba(0,0,0,0.2)] backdrop-blur-[4px] pointer-events-none"
+            style={{ 
+              width: d.size, 
+              left: d.x, 
+              borderRadius: '50% 50% 40% 40% / 60% 60% 40% 40%' // Tear drop shape
+            }}
+            initial={{ top: d.startY, opacity: 0, height: d.size * 1.2 }}
+            animate={{ 
+              top: ["-10%", "110%"],
+              opacity: [0, 1, 1, 0],
+              height: [d.size * 1.2, d.size * 2, d.size * 1.2] // Stretches as it falls
+            }}
+            transition={{ duration: d.duration, repeat: Infinity, ease: "easeIn", delay: d.delay }}
           />
         ))}
       </>
