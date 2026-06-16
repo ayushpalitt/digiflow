@@ -10,13 +10,15 @@
   --color-df-sunset: #E8A598;
   --color-df-navy: #2B3A55;
 
-  --font-heading: var(--font-cormorant);
+  --font-heading: var(--font-cinzel);
   --font-body: var(--font-inter);
   --font-handwriting: var(--font-homemade-apple);
   --font-handwriting-alt: var(--font-caveat);
   --font-dancing: var(--font-dancing-script);
   --font-typewriter: var(--font-special-elite);
   --font-pacifico: var(--font-pacifico);
+  --font-playfair: var(--font-playfair);
+  --font-cinzel: var(--font-cinzel);
 }
 
 :root {

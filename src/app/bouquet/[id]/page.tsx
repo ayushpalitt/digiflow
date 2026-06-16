@@ -172,9 +172,19 @@ export default function BouquetRecipientView() {
                  style={{ backgroundImage: 'url("data:image/svg+xml;utf8,<svg viewBox=\\"0 0 200 200\\" xmlns=\\"http://www.w3.org/2000/svg\\"><filter id=\\"noiseFilter\\"><feTurbulence type=\\"fractalNoise\\" baseFrequency=\\"0.85\\" numOctaves=\\"3\\" stitchTiles=\\"stitch\\"/></filter><rect width=\\"100%\\" height=\\"100%\\" filter=\\"url(%23noiseFilter)\\"/></svg>")' }}>
             </div>
             
-            <p className={`${bouquet.fontStyle || 'font-handwriting-alt'} text-2xl md:text-3xl text-df-navy leading-loose relative z-10 whitespace-pre-wrap mt-8`}>
-              {bouquet.message}
-            </p>
+            <div className={`${bouquet.fontStyle || 'font-handwriting-alt'} text-2xl md:text-3xl text-df-navy leading-loose relative z-10 whitespace-pre-wrap mt-8 flex flex-col gap-6`}>
+              {bouquet.recipientName && (
+                <p>Dear {bouquet.recipientName},</p>
+              )}
+              <p>{bouquet.message}</p>
+              {bouquet.senderName && (
+                <p className="mt-4">
+                  With love,
+                  <br />
+                  {bouquet.senderName}
+                </p>
+              )}
+            </div>
           </motion.div>
 
         </div>

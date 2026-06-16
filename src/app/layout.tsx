@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond, Homemade_Apple, Caveat, Dancing_Script, Special_Elite, Pacifico } from "next/font/google";
+import { Inter, Cormorant_Garamond, Homemade_Apple, Caveat, Dancing_Script, Special_Elite, Pacifico, Playfair_Display, Cinzel } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -41,6 +41,16 @@ const pacifico = Pacifico({
   subsets: ["latin"],
 });
 
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+});
+
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "DIGIFLOW | A Digital Bouquet",
   description: "Send flowers, words, and memories.",
@@ -56,7 +66,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${cormorant.variable} ${homemadeApple.variable} ${caveat.variable} ${dancingScript.variable} ${specialElite.variable} ${pacifico.variable} h-full antialiased`}
+      className={`${inter.variable} ${cormorant.variable} ${homemadeApple.variable} ${caveat.variable} ${dancingScript.variable} ${specialElite.variable} ${pacifico.variable} ${playfair.variable} ${cinzel.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ConvexClientProvider>{children}</ConvexClientProvider>

@@ -24,6 +24,8 @@ export default function CreateBouquet() {
   const [flowers, setFlowers] = useState<{type: string, x: number, y: number, rotation: number, scale: number, uid?: string, isManual?: boolean, flipped?: boolean}[]>([]);
   const [letterStyle, setLetterStyle] = useState("classic");
   const [message, setMessage] = useState("");
+  const [senderName, setSenderName] = useState("");
+  const [recipientName, setRecipientName] = useState("");
   const [fontStyle, setFontStyle] = useState("font-handwriting-alt");
   const [world, setWorld] = useState("forest");
   const [music, setMusic] = useState<{trackUrl: string, title: string, artist: string, albumArt: string, startTime: number, endTime: number} | undefined>(undefined);
@@ -47,11 +49,11 @@ export default function CreateBouquet() {
       case 1:
         return <LetterStyleSelector letterStyle={letterStyle} setLetterStyle={setLetterStyle} onNext={handleNext} onBack={handleBack} />;
       case 2:
-        return <MessageEditor message={message} setMessage={setMessage} fontStyle={fontStyle} setFontStyle={setFontStyle} onNext={handleNext} onBack={handleBack} />;
+        return <MessageEditor message={message} setMessage={setMessage} senderName={senderName} setSenderName={setSenderName} recipientName={recipientName} setRecipientName={setRecipientName} fontStyle={fontStyle} setFontStyle={setFontStyle} onNext={handleNext} onBack={handleBack} />;
       case 3:
         return <WorldSelector world={world} setWorld={setWorld} onNext={handleNext} onBack={handleBack} />;
       case 4:
-        return <MusicIntegration music={music} setMusic={setMusic} onBack={handleBack} bouquetData={{flowers, letterStyle, message, fontStyle, world, music}} />;
+        return <MusicIntegration music={music} setMusic={setMusic} onBack={handleBack} bouquetData={{flowers, letterStyle, message, senderName, recipientName, fontStyle, world, music}} />;
       default:
         return null;
     }

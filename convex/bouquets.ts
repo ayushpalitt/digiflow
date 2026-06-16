@@ -47,6 +47,8 @@ export const createBouquet = mutation({
     ),
     letterStyle: v.string(),
     message: v.string(),
+    senderName: v.optional(v.string()),
+    recipientName: v.optional(v.string()),
     world: v.string(),
     music: v.optional(
       v.object({
@@ -91,6 +93,8 @@ export const updateBouquet = mutation({
     ),
     letterStyle: v.string(),
     message: v.string(),
+    senderName: v.optional(v.string()),
+    recipientName: v.optional(v.string()),
     world: v.string(),
     music: v.optional(
       v.object({

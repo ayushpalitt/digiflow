@@ -17,6 +17,8 @@ export default defineSchema({
     ),
     letterStyle: v.string(),
     message: v.string(),
+    senderName: v.optional(v.string()),
+    recipientName: v.optional(v.string()),
     world: v.string(),
     music: v.optional(
       v.object({

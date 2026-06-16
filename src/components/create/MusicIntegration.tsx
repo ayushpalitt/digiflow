@@ -75,6 +75,8 @@ export default function MusicIntegration({ music, setMusic, onBack, bouquetData 
         flowers: bouquetData.flowers,
         letterStyle: bouquetData.letterStyle,
         message: bouquetData.message,
+        senderName: bouquetData.senderName,
+        recipientName: bouquetData.recipientName,
         world: bouquetData.world,
         music: music,
       });

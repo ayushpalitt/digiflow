@@ -43,6 +43,8 @@ export default function EditBouquet() {
   const [flowers, setFlowers] = useState<any[]>([]);
   const [letterStyle, setLetterStyle] = useState("classic");
   const [message, setMessage] = useState("");
+  const [senderName, setSenderName] = useState("");
+  const [recipientName, setRecipientName] = useState("");
   const [fontStyle, setFontStyle] = useState("font-handwriting-alt");
   const [world, setWorld] = useState("forest");
   const [music, setMusic] = useState<any>(undefined);
@@ -53,6 +55,8 @@ export default function EditBouquet() {
       setFlowers(bouquet.flowers);
       setLetterStyle(bouquet.letterStyle);
       setMessage(bouquet.message);
+      setSenderName(bouquet.senderName || "");
+      setRecipientName(bouquet.recipientName || "");
       setFontStyle(bouquet.fontStyle || "font-handwriting-alt");
       setWorld(bouquet.world);
       setMusic(bouquet.music);
@@ -96,6 +100,8 @@ export default function EditBouquet() {
         flowers,
         letterStyle,
         message,
+        senderName,
+        recipientName,
         fontStyle,
         world,
         music
@@ -118,7 +124,7 @@ export default function EditBouquet() {
       case 1:
         return <LetterStyleSelector letterStyle={letterStyle} setLetterStyle={setLetterStyle} onNext={handleNext} onBack={handleBack} />;
       case 2:
-        return <MessageEditor message={message} setMessage={setMessage} fontStyle={fontStyle} setFontStyle={setFontStyle} onNext={handleNext} onBack={handleBack} />;
+        return <MessageEditor message={message} setMessage={setMessage} senderName={senderName} setSenderName={setSenderName} recipientName={recipientName} setRecipientName={setRecipientName} fontStyle={fontStyle} setFontStyle={setFontStyle} onNext={handleNext} onBack={handleBack} />;
       case 3:
         return <WorldSelector world={world} setWorld={setWorld} onNext={handleNext} onBack={handleBack} />;
       case 4:
